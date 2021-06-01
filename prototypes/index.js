@@ -24,24 +24,44 @@ const { dinosaurs, humans, movies } = require('./datasets/dinosaurs');
 // DATASET: kitties from ./datasets/kitties
 const kittyPrompts = {
   orangeKittyNames() {
-
+    const nameOfOrangeCats = kitties.reduce((acc,curr) => {
+      if (curr.color ==='orange'){
+        acc.push(curr.name);
+      }
+      return acc;
+    },[]);
     // Return an array of just the names of kitties who are orange e.g.
     // ['Tiger', 'Snickers']
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = nameOfOrangeCats;
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    //reducing the list into a single array with only names if the color of the cat is orange
   },
 
   sortByAge() {
     // Sort the kitties by their age
+    // array of sorted objects as the return value 
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const compare = (a,b) => {
+      let comparision = 0; 
+      if (a.age < b.age){
+        comparision = 1;
+      } else if ( a.age > b.age){
+        comparision = -1;
+      }
+      return comparision;
+    };
+
+    const result = kitties.sort(compare);
     return result;
 
     // Annotation:
     // Write your annotation here as a comment
+    // comparing the objects based on age. I want larger ages to come before smaller ages
+    // if first element is less than second element, put second element in front 
+    // if first element is larger than second element, put first in front 
+    // ordering question 
   },
 
   growUp() {
