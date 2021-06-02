@@ -76,17 +76,15 @@ const kittyPrompts = {
     //   age: 7,
     //   color: 'orange'
     // },
-    // ...etc]
-
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    // ...etc] 
+    const plusTwo = kitties.map((cat)=> {
+      cat.age += 2;
+      return cat; 
+    });
+    const result = plusTwo;
     return result;
   }
 };
-
-
-
-
-
 
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
@@ -166,10 +164,6 @@ const modPrompts = {
 // ---------------------------------------------------------------------------
 
 
-
-
-
-
 // DATASET: cakes from ./datasets/cakes
 const cakePrompts = {
   stockPerCake() {
@@ -181,7 +175,26 @@ const cakePrompts = {
     //    ..etc
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    // just want an array of objects and in each object, only have the flavor and instock keys and values
+    // const flavorAndInStock = cakes.reduce((acc,curr)=> {
+    //   acc.push({'flavor':curr.cakeFlavor, 'inStock':curr.inStock});
+    //   return acc;
+    // },[]);
+
+    // option 1
+    const flavorAndInStock = cakes.map(({cakeFlavor: flavor, inStock}) => ({ flavor, inStock}));
+
+    //option 2
+    const flavorAndInStock2 = cakes.map(cake => {
+      const { cakeFlavor: flavor } = cake;
+      return { flavor, inStock};
+    });
+
+    //option three
+    const flavorAndInStock3 = cakes.map(cake => ({ flavor: cake.cakeFlavor, inStock: cake.inStock}));
+
+
+    const result = flavorAndInStock;
     return result;
 
     // Annotation:
