@@ -106,10 +106,10 @@ const clubPrompts = {
 
     const oneLoop = clubs.reduce((acc, curr) => {
       curr.members.map((person) => {
-        if (!(person in acc)){
-          acc[person] =[curr.club];
-        } else {
+        if (acc[person]){
           acc[person].push(curr.club);
+        } else {
+          acc[person] = [curr.club];
         }
       });
       return acc;
@@ -140,16 +140,17 @@ const clubPrompts = {
 // DATASET: mods from ./datasets/mods
 const modPrompts = {
   studentsPerMod() {
-    // Return an array of objects where the keys are mod (the number of the module)
-    // and studentsPerInstructor (how many students per instructor there are for that mod) e.g.
-    // [
-    //   { mod: 1, studentsPerInstructor: 9 },
-    //   { mod: 2, studentsPerInstructor: 11 },
-    //   { mod: 3, studentsPerInstructor: 10 },
-    //   { mod: 4, studentsPerInstructor: 8 }
-    // ]
-
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    // const studentsPerInstructor = mods.map((mod)=> {
+    //   mod.studentsPerInstructor = mod.students/ mod.instructors;
+    //   delete mod.students;
+    //   delete mod.instructors;
+    //   return mod;
+    // });
+    const studentsPerInstructor = mods.map(({ mod, students, instructors}) => {
+      const studentsPerInstructor= students/instructors;
+      return {mod,studentsPerInstructor};
+    });
+    const result = studentsPerInstructor;
     return result;
 
     // Annotation:
@@ -189,14 +190,14 @@ const cakePrompts = {
     // option 1
     const flavorAndInStock = cakes.map(({cakeFlavor: flavor, inStock}) => ({ flavor, inStock}));
 
-    //option 2
-    const flavorAndInStock2 = cakes.map(cake => {
-      const { cakeFlavor: flavor } = cake;
-      return { flavor, inStock};
-    });
+    // //option 2
+    // const flavorAndInStock2 = cakes.map(cake => {
+    //   const { cakeFlavor: flavor } = cake;
+    //   return { flavor, inStock};
+    // });
 
-    //option three
-    const flavorAndInStock3 = cakes.map(cake => ({ flavor: cake.cakeFlavor, inStock: cake.inStock}));
+    // //option three
+    // const flavorAndInStock3 = cakes.map(cake => ({ flavor: cake.cakeFlavor, inStock: cake.inStock}));
 
 
     const result = flavorAndInStock;
@@ -285,9 +286,22 @@ const cakePrompts = {
     //    ...etc
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    
+    const groceryList = cakes.reduce((acc,curr) => {
+      curr.toppings.forEach((topping) => {
+        if (acc[topping]){
+          acc[topping] += 1;
+        } else {
+          acc[topping] = 1;
+        }
+      });
 
+      return acc;
+    },{});
+
+
+    const result = groceryList;
+    return result;
     // Annotation:
     // Write your annotation here as a comment
   }
@@ -319,8 +333,8 @@ const classPrompts = {
     //   { roomLetter: 'E', program: 'FE', capacity: 22 },
     //   { roomLetter: 'G', program: 'FE', capacity: 29 }
     // ]
-
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const fontEndClasses = classrooms.filter(({program})=> program === 'FE');
+    const result = fontEndClasses;
     return result;
 
     // Annotation:
@@ -335,8 +349,28 @@ const classPrompts = {
     //   beCapacity: 96
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const totalCapacities = classrooms.reduce((acc,curr)=> {
+      if (curr.program === 'FE'){
+        if ( acc.feCapacity){
+          acc.feCapacity += curr.capacity;
+        } else {
+          acc.feCapacity = curr.capacity;
+        }
+      }
+      if (curr.program === 'BE'){
+        if (curr.program === 'BE' && acc.beCapacity){
+          acc.beCapacity += curr.capacity;
+        } else {
+          acc.beCapacity = curr.capacity;
+        }
+      }
+      return acc;
+    },{});
+
+
+    const result = totalCapacities;
     return result;
+
 
     // Annotation:
     // Write your annotation here as a comment
@@ -345,8 +379,19 @@ const classPrompts = {
   sortByCapacity() {
     // Return the array of classrooms sorted by their capacity (least capacity to greatest)
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const leastToGreatest = ((a,b) =>{
+      let comparision = 0;
+      if (a.capacity > b.capacity){
+        comparision = 1;
+      } else {
+        comparision = -1;
+      }
+      return comparision;
+    });
+
+    const result = classrooms.sort(leastToGreatest) ;
     return result;
+
 
     // Annotation:
     // Write your annotation here as a comment
@@ -372,8 +417,16 @@ const bookPrompts = {
     //   'Catch-22', 'Treasure Island']
 
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const noViolence = books.reduce((acc,curr) => {
+      if (curr.genre !== 'Horror' && curr.genre !== 'True Crime'){
+        acc.push(curr.title);
+      }
+      return acc;
+    },[]);
+
+    const result = noViolence;
     return result;
+
 
     // Annotation:
     // Write your annotation here as a comment
