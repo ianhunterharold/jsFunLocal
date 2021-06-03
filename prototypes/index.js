@@ -93,10 +93,6 @@ const kittyPrompts = {
 // ---------------------------------------------------------------------------
 
 
-
-
-
-
 // DATASET: clubs from ./datasets/clubs
 const clubPrompts = {
   membersBelongingToClubs() {
@@ -108,15 +104,24 @@ const clubPrompts = {
     //   ...etc
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const oneLoop = clubs.reduce((acc, curr) => {
+      curr.members.map((person) => {
+        if (!(person in acc)){
+          acc[person] =[curr.club];
+        } else {
+          acc[person].push(curr.club);
+        }
+      });
+      return acc;
+    },{});
+
+    const result = oneLoop;
     return result;
 
     // Annotation:
     // Write your annotation here as a comment
   }
 };
-
-
 
 
 
@@ -222,7 +227,9 @@ const cakePrompts = {
     // ..etc
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const hasStock = cakes.filter((cake)=> cake.inStock >= 1);
+
+    const result = hasStock;
     return result;
 
     // Annotation:
@@ -233,11 +240,16 @@ const cakePrompts = {
     // Return the total amount of cakes in stock e.g.
     // 59
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const totalCakes = cakes.reduce((acc, curr) => {
+      return acc += curr.inStock;
+    },0);
+
+    const result = totalCakes;
     return result;
 
     // Annotation:
     // Write your annotation here as a comment
+    // you need to define an initial value for reduce so i started the value at zero 
   },
 
   allToppings() {
@@ -245,11 +257,21 @@ const cakePrompts = {
     // every cake in the dataset e.g.
     // ['dutch process cocoa', 'toasted sugar', 'smoked sea salt', 'berries', ..etc]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    // iterate through the objects and make one big array 
+    let single = [];
+    const singleList = cakes.map((cake)=>{
+      single = [...single, ...cake.toppings];
+    });
+    //above function creates a single array with duplicates
+    //create an array with only unique ingredients 
+    const uniqueToppings = [...new Set(single)];
+
+    const result = uniqueToppings;
     return result;
 
     // Annotation:
     // Write your annotation here as a comment
+    // the set data strucutre in es6 is great for finding unique values 
   },
 
   groceryList() {
