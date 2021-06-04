@@ -256,12 +256,12 @@ describe("PROTOTYPES", () => {
         program: "FE",
         capacity: 27
       }, {
-        roomLetter: "B",
-        program: "BE",
-        capacity: 29
-      }, {
         roomLetter: "G",
         program: "FE",
+        capacity: 29
+      }, {
+        roomLetter: "B",
+        program: "BE",
         capacity: 29
       }, {
         roomLetter: "D",

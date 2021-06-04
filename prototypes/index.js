@@ -147,12 +147,13 @@ const modPrompts = {
     //   return mod;
     // });
     const studentsPerInstructor = mods.map(({ mod, students, instructors}) => {
-      const studentsPerInstructor= students/instructors;
+      const studentsPerInstructor = students/instructors;
       return {mod,studentsPerInstructor};
     });
     const result = studentsPerInstructor;
     return result;
 
+    // [{'mod': 1, 'studnetPerInstructor': 23}]
     // Annotation:
     // Write your annotation here as a comment
   }
@@ -439,8 +440,22 @@ const bookPrompts = {
     // [{ title: 'Harry Potter and the Sorcerer\'s Stone', year: 1997 },
     //  { title: 'Life of Pi', year: 2001 },
     //  { title: 'The Curious Incident of the Dog in the Night-Time', year: 2003 }]
+    // const nintiesAndNewerBooks = books.map(({title,published: year}) => {
+    //   if (year >= 1990){
+    //     return {title,year};
+    //   } 
+    // });
+    // const filterOut = nintiesAndNewerBooks.filter((book)=> book !== undefined);
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const list = [];
+    const nintiesAndNewerBooks = books.forEach(({title,published: year}) => {
+      if (year >= 1990){
+        list.push({title,year});
+      } 
+    });
+  
+    // const filterOut = nintiesAndNewerBooks.filter((book)=> book !== undefined);
+    const result = list;
     return result;
 
     // Annotation:
