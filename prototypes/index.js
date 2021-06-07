@@ -478,7 +478,12 @@ const weatherPrompts = {
     // return an array of all the average temperatures. Eg:
     // [ 40, 40, 44.5, 43.5, 57, 35, 65.5, 62, 14, 46.5 ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const average = weather.map(({temperature: {low, high}})=> {
+      const averageValue = (low + high)/ 2; 
+      return averageValue; 
+    });
+  
+    const result = average;
     return result;
 
     // Annotation:
@@ -491,13 +496,19 @@ const weatherPrompts = {
     // [ 'Atlanta, Georgia is sunny.',
     // 'New Orleans, Louisiana is sunny.',
     // 'Raleigh, North Carolina is mostly sunny.' ]
-
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const sunnyAndPartly = [];
+    const sentenceBuilding  = weather.forEach(({location,type}) => {
+      if (type === 'mostly sunny' || type === 'sunny'){
+        sunnyAndPartly.push(`${location} is ${type}.`);
+      } 
+    });
+    const result = sunnyAndPartly;
     return result;
 
     // Annotation:
     // Write your annotation here as a comment
   },
+
 
   findHighestHumidity() {
     // Return the location with the highest humidity. Eg:
@@ -507,12 +518,22 @@ const weatherPrompts = {
     //   humidity: 84,
     //   temperature: { high: 49, low: 38 }
     // }
+    let most = 0;
+    let locationObj = {};
+    const humid = weather.forEach((location) => {
+      if (location.humidity > most){
+        most = location.humidity;
+        locationObj = location;
+      }
+    });
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = locationObj;
     return result;
 
     // Annotation:
     // Write your annotation here as a comment
+    // keep track of most humid locations object and assign the temp to the highest value
+    //return the object of the most humid location
 
   }
 };
