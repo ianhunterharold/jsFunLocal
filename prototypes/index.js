@@ -352,7 +352,7 @@ const classPrompts = {
 
     const totalCapacities = classrooms.reduce((acc,curr)=> {
       if (curr.program === 'FE'){
-        if ( acc.feCapacity){
+        if (acc.feCapacity){
           acc.feCapacity += curr.capacity;
         } else {
           acc.feCapacity = curr.capacity;
@@ -555,10 +555,17 @@ const nationalParksPrompts = {
     //   parksToVisit: ["Yellowstone", "Glacier", "Everglades"],
     //   parksVisited: ["Rocky Mountain", "Acadia", "Zion"]
     //}
+    const visitAndNotVisit = nationalParks.reduce((acc,curr) => {
+      if (curr.visited === false ){
+        acc.parksToVisit.push(curr.name);
+      } else {
+        acc.parksVisited.push(curr.name);
+      }
+      return acc; 
+    },{'parksToVisit':[],parksVisited:[]});
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = visitAndNotVisit;
     return result;
-
     // Annotation:
     // Write your annotation here as a comment
   },
@@ -571,13 +578,17 @@ const nationalParksPrompts = {
     // { Maine: 'Acadia' },
     // { Utah: 'Zion' },
     // { Florida: 'Everglades' } ]
+    // const list = []; 
+    // const statesAndParks = nationalParks.forEach(({location,name}) => {
+    //   list.push({ [location] : name});
+    // });
+    // console.log(list)
+    const stateParks = nationalParks.map(({location,name}) => {
+      return { [location] : name};
+    });
 
-
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = stateParks;
     return result;
-
-    // Annotation:
-    // Write your annotation here as a comment
   },
 
   getParkActivities() {
