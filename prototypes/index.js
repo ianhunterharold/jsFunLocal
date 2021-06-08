@@ -607,11 +607,20 @@ const nationalParksPrompts = {
     //   'backpacking',
     //   'rock climbing' ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const combine = nationalParks.map(({activities})=> {
+      return activities;
+    });
+  
+    const unique = [... new Set(combine.flat())];
+
+    const result = unique;
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+
+    // iterate through list and combine all of the activities into a single array. 
+    //flatten the nested arrays so that they are all elements in the same array
+    // then use set to only keep the unique values 
   }
 };
 
@@ -634,7 +643,12 @@ const breweryPrompts = {
     // Return the total beer count of all beers for every brewery e.g.
     // 40
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const totalBeers = breweries.reduce((acc,curr)=> {
+      const { beers } = curr;
+      acc += beers.length;
+      return acc;
+    },0);
+    const result = totalBeers;
     return result;
 
     // Annotation:
@@ -650,7 +664,12 @@ const breweryPrompts = {
     // ...etc.
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const nameAndBeerCount = breweries.map(({name, beers}) => {
+      const beerCount = beers.length;
+      return {name,beerCount};
+    });
+
+    const result = nameAndBeerCount;
     return result;
 
     // Annotation:
@@ -662,11 +681,26 @@ const breweryPrompts = {
     // e.g.
     // { name: 'Barrel Aged Nature\'s Sweater', type: 'Barley Wine', abv: 10.9, ibu: 40 }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    let highestAlcoholBeer = {};
+    let highestAbv= 0;
+
+    const findHighest = breweries.forEach(({beers})=> {
+      beers.forEach((beer)=> {
+        if (beer.abv > highestAbv){
+          highestAbv = beer.abv;
+          highestAlcoholBeer = beer;
+        }
+      });
+      return highestAlcoholBeer;
+    });
+    const result = highestAlcoholBeer;
     return result;
+    // use sort instead of this strategy - sort sort sort 
 
     // Annotation:
     // Write your annotation here as a comment
+    // keep track of beer object that has hieghest abv, keep track of abv value 
+    //return the abv value that is highest
   }
 };
 
