@@ -805,6 +805,24 @@ const turingPrompts = {
     //     Will: [1, 2, 3, 4]
     //   }
 
+    const teachers = instructors.reduce((acc,curr) => {
+      let {name} = curr;
+      acc[name]= [];
+      return acc;
+    },{});
+    //created object with names and their value as an array
+
+    // const compare = instructors.forEach(({name, teaches}) => {
+    //   teaches.forEach((subject)=>{
+    //     cohorts.forEach(({module,curriculum}) => {
+    //       curriculum.forEach((sub) => {
+    //         if (sub )
+    //       })
+    //     })
+    //   })
+    // })
+    // WIP
+
     const result = 'REPLACE WITH YOUR RESULT HERE';
     return result;
 
@@ -1019,8 +1037,17 @@ const dinosaurPrompts = {
     //   'Jurassic World: Fallen Kingdom': 18
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const movieAndDinoCount = movies.reduce((acc,curr)=> {
+      const {title, dinos} = curr;
+      acc[title] = dinos.length;
+      return acc;
+    },{});
+
+
+
+    const result = movieAndDinoCount;
     return result;
+
 
     // Annotation:
     // Write your annotation here as a comment

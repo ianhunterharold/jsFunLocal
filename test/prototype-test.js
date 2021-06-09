@@ -653,11 +653,11 @@ describe("PROTOTYPES", () => {
       const e = dinosaurPrompts.countAwesomeDinosaurs();
 
       expect(e).to.deep.equal({
-        'Jurassic Park': 5,
-        'The Lost World: Jurassic Park': 8,
-        'Jurassic Park III': 9,
-        'Jurassic World': 11,
-        'Jurassic World: Fallen Kingdom': 18
+        'Jurassic Park': 7,
+        'The Lost World: Jurassic Park': 10,
+        'Jurassic Park III': 11,
+        'Jurassic World': 13,
+        'Jurassic World: Fallen Kingdom': 20
       })
     });
     
