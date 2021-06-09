@@ -744,9 +744,18 @@ const turingPrompts = {
     //  { name: 'Robbie', studentCount: 18 }
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    const teachers = []; 
+    const instructorStudnet = instructors.forEach((instructor)=>{
+      cohorts.forEach(({module, studentCount}) => {
+        if (instructor.module === module){
+          teachers.push( {['name']: instructor.name, ['studentCount']:studentCount } );
+        }
+      });
+    });
 
+
+    const result = teachers;
+    return result;
     // Annotation:
     // Write your annotation here as a comment
   },
@@ -758,7 +767,23 @@ const turingPrompts = {
     // cohort1804: 10.5
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const mod = {};
+    const total = instructors.forEach(({module}) => {
+      if (mod[module]){
+        mod[module] += 1;
+      } else {
+        mod[module] = 1;
+      }
+    });
+    const ratio = {}; 
+    const match = cohorts.forEach(({cohort, module, studentCount}) => {
+      for (const key in mod){
+        if (key == module){
+          ratio[`cohort${cohort}`] = (studentCount / mod[key]);
+        }
+      }
+    });
+    const result = ratio;
     return result;
 
     // Annotation:
