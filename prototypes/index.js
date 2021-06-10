@@ -874,8 +874,22 @@ const bossPrompts = {
     //   { bossName: 'Ursula', sidekickLoyalty: 20 },
     //   { bossName: 'Scar', sidekickLoyalty: 16 }
     // ]
+    const bossAndLoytalty = [];
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    for (const key in bosses){
+      bossAndLoytalty.push({['bossName']: bosses[key].name, ['sidekickLoyalty']: 0 });
+    }
+    // now we have data structure and value 
+    const loyalty = sidekicks.forEach((sideKick) => {
+      bossAndLoytalty.forEach((boss) => {
+        if (sideKick.boss == boss.bossName ){
+          boss.sidekickLoyalty += sideKick.loyaltyToBoss;
+        }
+      });
+    });
+
+
+    const result = bossAndLoytalty;
     return result;
 
     // Annotation:
@@ -917,7 +931,23 @@ const astronomyPrompts = {
     //     color: 'red' }
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    let allTheStars = [];
+    for (const key in constellations){
+    //  console.log(constellations[key].stars);
+      allTheStars = [...allTheStars, ...constellations[key].stars];
+    }
+    // onne large array, iterate and try and match with star names
+    const starsIn = [];
+    allTheStars.forEach((name) => {
+      stars.forEach((star)=>{
+        if (star.name === name){
+          starsIn.push(star);
+        }
+      });
+    });
+
+
+    const result = starsIn;
     return result;
 
     // Annotation:
@@ -935,12 +965,30 @@ const astronomyPrompts = {
     //   red: [{obj}]
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+  
+    const colors = stars.reduce((acc,curr) => {
+      //if the color key exisits, 
+      const { color } = curr;
+      if (acc[color]){
+        acc[color].push(curr);
+        // add the object to the array of objects
+      } else {
+        // else create the color key and add the object in the values array        
+        acc[color] = [curr];
+      }
+      return acc;
+    },{});
+
+
+    const result = colors;
     return result;
 
     // Annotation:
     // Write your annotation here as a comment
   },
+  // Annotation:
+  // Write your annotation here as a comment
+
 
   constellationsStarsExistIn() {
     // Return an array of the names of the constellations that the brightest stars are part of e.g.

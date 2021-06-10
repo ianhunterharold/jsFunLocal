@@ -300,8 +300,8 @@ describe("PROTOTYPES", () => {
 
       expect(e).to.deep.equal([{
         title: 'Harry Potter and the Sorcerer\'s Stone', year: 1997 },
-        { title: 'Life of Pi', year: 2001 },
-        { title: 'The Curious Incident of the Dog in the Night-Time', year: 2003
+      { title: 'Life of Pi', year: 2001 },
+      { title: 'The Curious Incident of the Dog in the Night-Time', year: 2003
       }])
     })
   });
@@ -345,19 +345,19 @@ describe("PROTOTYPES", () => {
       const e = nationalParksPrompts.getParkActivities();
 
       expect(e).to.deep.equal(
-      [ 'hiking',
-        'shoeshoing',
-        'camping',
-        'fishing',
-        'boating',
-        'watching wildlife',
-        'cross-country skiing',
-        'swimming',
-        'bird watching',
-        'canyoneering',
-        'backpacking',
-        'rock climbing'
-      ])
+        [ 'hiking',
+          'shoeshoing',
+          'camping',
+          'fishing',
+          'boating',
+          'watching wildlife',
+          'cross-country skiing',
+          'swimming',
+          'bird watching',
+          'canyoneering',
+          'backpacking',
+          'rock climbing'
+        ])
     }),
     it("getParkInEachState", () => {
       const e = nationalParksPrompts.getParkInEachState();
@@ -515,18 +515,20 @@ describe("PROTOTYPES", () => {
     it("starsInConstellations", () => {
       const e = astronomyPrompts.starsInConstellations();
 
-      expect(e).to.deep.equal([{
-        name: 'Rigel',
-        visualMagnitude: 0.13,
-        constellation: 'Orion',
-        lightYearsFromEarth: 860,
-        color: 'blue'
-      }, { name: 'Betelgeuse',
-        visualMagnitude: 0.5,
-        constellation: 'Orion',
-        lightYearsFromEarth: 640,
-        color: 'red'
-      }])
+      expect(e).to.deep.equal([
+        { name: 'Betelgeuse',
+          visualMagnitude: 0.5,
+          constellation: 'Orion',
+          lightYearsFromEarth: 640,
+          color: 'red'
+        },
+        {
+          name: 'Rigel',
+          visualMagnitude: 0.13,
+          constellation: 'Orion',
+          lightYearsFromEarth: 860,
+          color: 'blue'
+        }]);
     });
     
     it("starsByColor", () => {
