@@ -790,6 +790,7 @@ const turingPrompts = {
     // Write your annotation here as a comment
   },
 
+
   modulesPerTeacher() {
     // Return an object where each key is an instructor name and each value is
     // an array of the modules they can teach based on their skills. e.g.:
@@ -810,20 +811,35 @@ const turingPrompts = {
       acc[name]= [];
       return acc;
     },{});
-    //created object with names and their value as an array
+    
 
-    // const compare = instructors.forEach(({name, teaches}) => {
-    //   teaches.forEach((subject)=>{
-    //     cohorts.forEach(({module,curriculum}) => {
-    //       curriculum.forEach((sub) => {
-    //         if (sub )
-    //       })
-    //     })
-    //   })
-    // })
-    // WIP
+    //add current module that they are already teaching to array
+    // const modNow = instructors.forEach(({module,name}) => {
+    //   teachers[name].push(module); 
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    // });
+
+    const cohortContent = cohorts.reduce((acc,curr) => {
+      const {module, curriculum} = curr; 
+      acc[module] = curriculum;
+      return acc;
+    },{});
+    //create data structure where I can compare keys values to instructor teaches values 
+
+    const containsSubject = instructors.map(({name, teaches}) => {
+      teaches.map((skill) => {
+        // iterate and compare cohort content 
+        //if contains is true, add cohort number to teachers data structure 
+        for(const key in cohortContent){
+          if (cohortContent[parseInt(key)].includes(skill) && !teachers[name].includes(parseInt(key))){
+            teachers[name].push(parseInt(key));
+          }
+        }
+      });
+    });
+    //refactor, first working solution
+  
+    const result = teachers;
     return result;
 
     // Annotation:
