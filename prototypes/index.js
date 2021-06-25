@@ -1092,18 +1092,56 @@ const ultimaPrompts = {
     // Annotation:
     // Write your annotation here as a comment
   },
-
   charactersByTotal() {
+    const names = characters.reduce((acc,curr) => {
+      const {name, weapons} = curr; 
+      
+      acc.push({[name]:{damage: 0, range:0}});
+      return acc;
+    },[]);
+    // console.log(names)
 
-    // Return the sum damage and total range for each character as an object.
-    // ex: [ { Avatar: { damage: 27, range: 24 }, { Iolo: {...}, ...}
+   // create an array of arrays of the weapons to better utitlize their values 
+    const weapons2 = []; 
+   for (const key in weapons){
+     weapons2.push([key, weapons[key].damage,weapons[key].range ])
+   };
+  //  console.log(weapons2)
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    const updatedChars = characters.map(({name}) => [name, 0, 0] );
+    console.log(updatedChars)
+    
+    
+    
+    //[ ['name', damageNum, rangeNum] ... ] ;
 
-    // Annotation:
-    // Write your annotation here as a comment
-  },
+
+
+
+    const totals = characters.forEach(({name, weapons: w})=> {
+      w.forEach((itm) => {
+        weapons2.forEach((w3) => {
+          console.log(w3[0],itm)
+          if (w3[0] === itm){
+            // wip come back to this one 
+
+          }
+        })
+      })
+    })
+
+
+
+
+  // Return the sum damage and total range for each character as an object.
+  // ex: [ { Avatar: { damage: 27, range: 24 }, { Iolo: {...}, ...}
+
+  const result = 'REPLACE WITH YOUR RESULT HERE';
+  return result;
+
+  // Annotation:
+  // Write your annotation here as a comment
+},
 };
 
 
