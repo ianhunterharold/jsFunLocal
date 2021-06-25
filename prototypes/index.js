@@ -856,7 +856,34 @@ const turingPrompts = {
     //   recursion: [ 'Pam', 'Leta' ]
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    //iterate through cohorts then iterate through instructors 
+    // create a key if it doesnt exist and see if instructors.teaches.includes(key)
+    // if it does add name to the array
+
+    const classes = cohorts.reduce((acc,curr) => {
+      const { curriculum } = curr;
+      curriculum.map( (subject) => {
+        if (!acc[subject]){
+          acc[subject] = [];
+        }
+      });
+      return acc;
+    },{});
+    // in data structure we like 
+
+    // Write your annotation here as a comment
+
+    for (const key in classes){
+      instructors.forEach(({name, teaches}) => {
+        if (teaches.includes(key)){
+          classes[key].push(name);
+        }
+      });
+    }
+  
+
+
+    const result = classes;
     return result;
 
     // Annotation:
