@@ -893,16 +893,11 @@ const turingPrompts = {
 
 
 
-
-
-
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
-
-
 
 
 
@@ -1078,8 +1073,20 @@ const ultimaPrompts = {
 
     // Return the sum of the amount of damage for all the weapons that our characters can use
     // Answer => 113
+    // iterate through characters weapons list
+    // at each weapon, go to the weapon array and get the damage value add to final value
+    let total = 0;
+    const characterWeapons = characters.map(({weapons: wep }) => {
+      wep.forEach((weap)=> {
+        for(const key in weapons){
+          if (weap === key){
+            total += weapons[key].damage;
+          }
+        }
+      });
+    });
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = total;
     return result;
 
     // Annotation:
