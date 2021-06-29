@@ -1172,14 +1172,12 @@ const dinosaurPrompts = {
     // iterate through movies and add all of the producers into an object/ reduce 
     const producers = movies.reduce((acc,curr) => {
       const { director, title, cast, yearReleased } = curr; 
-      
-      // make map
-      const castAge  = cast.reduce((acc,curr) => {
-        const yearBorn = humans[curr].yearBorn;  
+    
+      const castAge = cast.map((member)=> {
+        const yearBorn = humans[member].yearBorn;
         const age = yearReleased - yearBorn;
-        acc.push(age);
-        return acc;
-      },[]);
+        return age;
+      });
 
       const totalAge = castAge.reduce((acc,curr) => acc += curr);
       const averageAge = Math.trunc(totalAge/castAge.length);
@@ -1189,12 +1187,54 @@ const dinosaurPrompts = {
       } else {
         acc[director] = {[title]: averageAge};
       }
-      
+
+
       return acc;
     },{});
   
     const result = producers;
     return result;
+  },
+
+  uncastActors() {
+    /*
+    Return an array of objects that contain the names of humans who have not been cast in a Jurassic Park movie (yet), their nationality, and their imdbStarMeterRating. The object in the array should be sorted alphabetically by nationality.
+
+    e.g.
+      [{
+        name: 'Justin Duncan',
+        nationality: 'Alien',
+        imdbStarMeterRating: 0
+      },
+      {
+        name: 'Karin Ohman',
+        nationality: 'Chinese',
+        imdbStarMeterRating: 0
+      },
+      {
+        name: 'Tom Wilhoit',
+        nationality: 'Kiwi',
+        imdbStarMeterRating: 1
+      }, {
+        name: 'Jeo D',
+        nationality: 'Martian',
+        imdbStarMeterRating: 0
+      }]
+    */
+
+    // iterate through movies and see if array of actors.includes a referenced key of an actor 
+    // if false, go get that actor make an object with name, nationality and imdbrating 
+    // then sort alphabetically by nationality value 
+
+    const notYetCasted = movies.reduce((acc,curr)=> {
+
+    },[])
+
+    const result = 'REPLACE WITH YOUR RESULT HERE';
+    return result;
+
+    // Annotation:
+    // Write your annotation here as a comment
   },
 
   actorsAgesInMovies() {
