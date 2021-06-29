@@ -1093,70 +1093,24 @@ const ultimaPrompts = {
     // Write your annotation here as a comment
   },
   charactersByTotal() {
-    const names = characters.reduce((acc,curr) => {
-      const {name, weapons} = curr; 
-      
-      acc.push({[name]:{damage: 0, range:0}});
-      return acc;
-    },[]);
-    // console.log(names)
+    // what we are shooting for 
+    // Return the sum damage and total range for each character as an object.
+    // ex: [ { Avatar: { damage: 27, range: 24 }, { Iolo: {...}, ...} ... ]
 
-   // create an array of arrays of the weapons to better utitlize their values 
-    const weapons2 = []; 
-   for (const key in weapons){
-     weapons2.push([key, weapons[key].damage,weapons[key].range ])
-   };
-  //  console.log(weapons2)
+    const charactersAndPowers = characters.map(({name,weapons:w}) => {
+      const damageAndRange = w.reduce((acc,curr) => { 
+        acc.damage += weapons[curr].damage;
+        acc.range += weapons[curr].range;
+        return acc;
+      },{damage:0, range:0});
 
-    const updatedChars = characters.map(({name}) => [name, 0, 0] );
-    console.log(updatedChars)
-    
-    
-    
-    //[ ['name', damageNum, rangeNum] ... ] ;
+      return {[name]: damageAndRange };   
+    });
 
-
-
-
-    const totals = characters.forEach(({name, weapons: w})=> {
-      w.forEach((itm) => {
-        weapons2.forEach((w3) => {
-          console.log(w3[0],itm)
-          if (w3[0] === itm){
-            // wip come back to this one 
-
-          }
-        })
-      })
-    })
-
-
-
-
-  // Return the sum damage and total range for each character as an object.
-  // ex: [ { Avatar: { damage: 27, range: 24 }, { Iolo: {...}, ...}
-
-  const result = 'REPLACE WITH YOUR RESULT HERE';
-  return result;
-
-  // Annotation:
-  // Write your annotation here as a comment
-},
+    const result = charactersAndPowers;
+    return result;
+  },
 };
-
-
-
-
-
-
-// ---------------------------------------------------------------------------
-// ---------------------------------------------------------------------------
-// ---------------------------------------------------------------------------
-// ---------------------------------------------------------------------------
-// ---------------------------------------------------------------------------
-
-
-
 
 
 
@@ -1195,7 +1149,7 @@ const dinosaurPrompts = {
         of the cast on the release year of that movie.
       e.g.:
       {
-        'Steven Spielberg':
+        'Steven Spielberg': 
           {
             'Jurassic Park': 34,
             'The Lost World: Jurassic Park': 37
@@ -1207,52 +1161,40 @@ const dinosaurPrompts = {
         'Colin Trevorrow':
           {
             'Jurassic World': 56
-           },
+          },
         'J. A. Bayona':
           {
             'Jurassic World: Fallen Kingdom': 59
           }
+
       }
     */
+    // iterate through movies and add all of the producers into an object/ reduce 
+    const producers = movies.reduce((acc,curr) => {
+      const { director, title, cast, yearReleased } = curr; 
+      
+      // make map
+      const castAge  = cast.reduce((acc,curr) => {
+        const yearBorn = humans[curr].yearBorn;  
+        const age = yearReleased - yearBorn;
+        acc.push(age);
+        return acc;
+      },[]);
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+      const totalAge = castAge.reduce((acc,curr) => acc += curr);
+      const averageAge = Math.trunc(totalAge/castAge.length);
+
+      if (acc[director]) {
+        acc[director][title] = averageAge;
+      } else {
+        acc[director] = {[title]: averageAge};
+      }
+      
+      return acc;
+    },{});
+  
+    const result = producers;
     return result;
-
-    // Annotation:
-    // Write your annotation here as a comment
-  },
-
-  uncastActors() {
-    /*
-    Return an array of objects that contain the names of humans who have not been cast in a Jurassic Park movie (yet), their nationality, and their imdbStarMeterRating. The object in the array should be sorted alphabetically by nationality.
-
-    e.g.
-      [{
-        name: 'Justin Duncan',
-        nationality: 'Alien',
-        imdbStarMeterRating: 0
-      },
-      {
-        name: 'Karin Ohman',
-        nationality: 'Chinese',
-        imdbStarMeterRating: 0
-      },
-      {
-        name: 'Tom Wilhoit',
-        nationality: 'Kiwi',
-        imdbStarMeterRating: 1
-      }, {
-        name: 'Jeo D',
-        nationality: 'Martian',
-        imdbStarMeterRating: 0
-      }]
-    */
-
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
-
-    // Annotation:
-    // Write your annotation here as a comment
   },
 
   actorsAgesInMovies() {
