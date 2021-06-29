@@ -1197,6 +1197,7 @@ const dinosaurPrompts = {
   },
 
   uncastActors() {
+   
     /*
     Return an array of objects that contain the names of humans who have not been cast in a Jurassic Park movie (yet), their nationality, and their imdbStarMeterRating. The object in the array should be sorted alphabetically by nationality.
 
@@ -1222,15 +1223,38 @@ const dinosaurPrompts = {
       }]
     */
 
-    // iterate through movies and see if array of actors.includes a referenced key of an actor 
-    // if false, go get that actor make an object with name, nationality and imdbrating 
-    // then sort alphabetically by nationality value 
+    // total list of actors 
+    const listOfActors = movies.reduce((acc,curr) => {
+      const {cast} = curr;
+      acc = [...acc, cast];
+      return acc;
+    },[]);
+    const flatten = listOfActors.flat(1);
+    const uniqueActors = [...new Set(flatten)];
+    //could probably refactor this 
 
-    const notYetCasted = movies.reduce((acc,curr)=> {
+    // unique list of all actors in all jurrasic park movies 
+    // are there any humans who do not match this list 
+    const notActing = [];
+    for (const key in humans){
+      const { nationality, imdbStarMeterRating} = humans[key]; 
+    
+      if (!uniqueActors.includes(key)){
+        notActing.push({['name']:key, nationality,imdbStarMeterRating});
+      }
+    }
+    // sort by alphabetical order with nationality
+    const alphbeticalNationality = notActing.sort((a, b) => {
+      if (a.nationality < b.nationality){
+        return -1;
+      }
+      if (a.nationality > b.nationality){
+        return 1;
+      }
+      return 0;
+    });
 
-    },[])
-
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = alphbeticalNationality;
     return result;
 
     // Annotation:
