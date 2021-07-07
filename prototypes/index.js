@@ -1195,9 +1195,7 @@ const dinosaurPrompts = {
     const result = producers;
     return result;
   },
-
   uncastActors() {
-   
     /*
     Return an array of objects that contain the names of humans who have not been cast in a Jurassic Park movie (yet), their nationality, and their imdbStarMeterRating. The object in the array should be sorted alphabetically by nationality.
 
@@ -1223,42 +1221,29 @@ const dinosaurPrompts = {
       }]
     */
 
-    // total list of actors 
-    const listOfActors = movies.reduce((acc,curr) => {
-      const {cast} = curr;
-      acc = [...acc, cast];
+    const allActors = movies.flatMap((curr)=> {
+      const { cast } = curr;
+      return cast;
+    });
+    const uniqueCast = [...new Set(allActors)];
+    //unique list of all actors in jp movies 
+
+    const allHumans = Object.keys(humans);
+    // get list of all the possible actors   
+
+    //find actors not in movies 
+    const notInJP = allHumans.reduce((acc,curr)=> {      
+      if (!uniqueCast.includes(curr)){
+        acc.push({['name']:curr,['nationality']:humans[curr].nationality,['imdbStarMeterRating']:humans[curr].imdbStarMeterRating});
+      }
       return acc;
     },[]);
-    const flatten = listOfActors.flat(1);
-    const uniqueActors = [...new Set(flatten)];
-    //could probably refactor this 
-
-    // unique list of all actors in all jurrasic park movies 
-    // are there any humans who do not match this list 
-    const notActing = [];
-    for (const key in humans){
-      const { nationality, imdbStarMeterRating} = humans[key]; 
     
-      if (!uniqueActors.includes(key)){
-        notActing.push({['name']:key, nationality,imdbStarMeterRating});
-      }
-    }
-    // sort by alphabetical order with nationality
-    const alphbeticalNationality = notActing.sort((a, b) => {
-      if (a.nationality < b.nationality){
-        return -1;
-      }
-      if (a.nationality > b.nationality){
-        return 1;
-      }
-      return 0;
-    });
-
-    const result = alphbeticalNationality;
+    //sort alphabetically by nationality
+    const alpahbeticalSort = notInJP.sort((a, b) => a.nationality.localeCompare(b.nationality));
+ 
+    const result = alpahbeticalSort;
     return result;
-
-    // Annotation:
-    // Write your annotation here as a comment
   },
 
   actorsAgesInMovies() {
@@ -1276,8 +1261,34 @@ const dinosaurPrompts = {
       { name: 'Chris Pratt', ages: [ 36, 39 ] },
       { name: 'Bryce Dallas Howard', ages: [ 34, 37 ] } ]
     */
+  
+    // iterate through cast list and make the internal reduce structure of their ages into an array 
+    const allActors = movies.flatMap((curr)=> {
+      const { cast } = curr;
+      return cast;
+    });
+    const uniqueCast = [...new Set(allActors)];
+    //unique list of all actors in jp movies 
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const castMembersAge = uniqueCast.reduce((accum,current) => {
+      //array of ages for that cast member iterating through the movies
+      const ages = movies.reduce((acc,curr) => {
+        const { yearReleased, cast } = curr;
+        if (cast.includes(current)){
+          const age = yearReleased - humans[current].yearBorn; 
+          acc.push(age); 
+        }
+        return acc;
+      },[]);
+      accum.push({name:current, ['ages']:ages});
+      return accum;
+    },[]);
+
+
+      
+
+
+    const result = castMembersAge;
     return result;
 
     // Annotation:
